@@ -100,7 +100,6 @@ __global__  void MonteCarlo( float *Xcs, float *Ycs, float *Rs, int *Hits )
 
 			// get the outgoing (bounced) vector:
 			float dot = inx*nx + iny*ny;
-			float outx = inx - 2.*nx*dot;	// angle of reflection = angle of incidence`
 			float outy = iny - 2.*ny*dot;	// angle of reflection = angle of incidence`
 
 			// find out if it hits the infinite plate:
@@ -220,7 +219,7 @@ main( int argc, char* argv[ ] )
 	double secondsTotal = 0.001 * (double)msecTotal;
 	double trialsPerSecond = (float)NUMTRIALS / secondsTotal;
 	double megaTrialsPerSecond = trialsPerSecond / 1000000.;
-	fprintf( stderr, "Number of Trials = %10d, MegaTrials/Second = %10.4lf\n", NUMTRIALS, megaTrialsPerSecond );
+	fprintf( stderr, "%10d\t%10d\t%10.4lf\t", NUMTRIALS, BLOCKSIZE, megaTrialsPerSecond );
 
 	// copy result from the device to the host:
 
@@ -237,7 +236,7 @@ main( int argc, char* argv[ ] )
 	}
 
 	float probability = 100.f * (float)numHits / (float)NUMTRIALS;
-	fprintf(stderr, "\nProbability = %6.3f %%\n", probability );
+	fprintf(stderr, "%6.3f %%\n", probability );
 
 	// clean up memory:
 	delete [ ] hXcs;
